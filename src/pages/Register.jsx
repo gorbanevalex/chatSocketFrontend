@@ -104,7 +104,7 @@ function Register() {
           />
           <button type="submit">Войти</button>
           <span>
-            Уже есть аккаунт?<Link to={"/register"}>Войти</Link>
+            Уже есть аккаунт?<Link to={"/login"}>Войти</Link>
           </span>
         </form>
       </FormContainer>

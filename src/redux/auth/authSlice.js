@@ -11,10 +11,13 @@ const authSlice = createSlice({
     login: (store, action) => {
       store.data = action.payload;
     },
+    logout: (store, action) => {
+      store.data = null;
+    },
   },
 });
 
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 export const isAuthCheck = (state) => Boolean(state.auth.data);
 export default authSlice.reducer;

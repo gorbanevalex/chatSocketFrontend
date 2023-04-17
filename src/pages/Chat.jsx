@@ -1,10 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../axios";
 import Contacts from "../components/Contacts/Contacts";
+import ContainerChat from "../components/ContainerChat/ContainerChat";
 import Welcome from "../components/Welcome/Welcome";
+import { isAuthCheck } from "../redux/auth/authSlice";
 
 function Chat() {
+  const isAuth = useSelector(isAuthCheck);
   const [contacts, setContacts] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState();
   React.useEffect(() => {
@@ -18,11 +23,19 @@ function Chat() {
       });
   }, []);
 
+  if (!window.localStorage.getItem("token")) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <ChatContainer>
       <div className="container">
         <Contacts contacts={contacts} changeChat={setSelectedChat} />
-        {!selectedChat && <Welcome />}
+        {!selectedChat ? (
+          <Welcome />
+        ) : (
+          <ContainerChat selectedChat={selectedChat} />
+        )}
       </div>
     </ChatContainer>
   );

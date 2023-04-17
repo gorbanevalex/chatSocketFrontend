@@ -9,9 +9,9 @@ function Contacts({ contacts, changeChat }) {
   const currentUser = useSelector((state) => state.auth.data);
   const [currentSelected, setCurrentSelected] = React.useState();
 
-  const changeChatHandler = (id) => {
-    setCurrentSelected(id);
-    changeChat(id);
+  const changeChatHandler = (item) => {
+    setCurrentSelected(item);
+    changeChat(item);
   };
   return (
     <Container>
@@ -24,9 +24,9 @@ function Contacts({ contacts, changeChat }) {
           <div
             key={item._id}
             className={`contact ${
-              item._id === currentSelected ? "selected" : ""
+              item._id === currentSelected?._id ? "selected" : ""
             }`}
-            onClick={() => changeChatHandler(item._id)}
+            onClick={() => changeChatHandler(item)}
           >
             <div className="avatar">
               <img src={noAvatar} alt="avatar" />

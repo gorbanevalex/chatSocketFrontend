@@ -17,7 +17,7 @@ function App() {
         dispatch(login(res.data.user));
       })
       .catch(() => {
-        navigate("/login");
+        // navigate("/login");
       });
   }, []);
 
