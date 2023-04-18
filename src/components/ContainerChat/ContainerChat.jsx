@@ -5,10 +5,13 @@ import axios from "../../axios";
 import noavatar from "../../assets/noavatar.jpg";
 import ContainerInput from "../ContainerInput.jsx/ContainerInput";
 import Logout from "../Logout/Logout";
+import { useSelector } from "react-redux";
 
-function ContainerChat({ selectedChat }) {
+function ContainerChat({ selectedChat, socket }) {
   const chatMessagesRef = React.useRef(null);
   const [messages, setMessages] = React.useState([]);
+  const userData = useSelector((state) => state.auth.data);
+  const [arivalMessage, setArivalMessage] = React.useState(null);
 
   React.useEffect(() => {
     chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
@@ -26,7 +29,25 @@ function ContainerChat({ selectedChat }) {
     }
   }, [selectedChat]);
 
+  React.useEffect(() => {
+    if (socket.current) {
+      socket.current.on("message-recieve", (msg) => {
+        setArivalMessage({ mySelf: false, text: msg });
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    arivalMessage && setMessages((prevState) => [...prevState, arivalMessage]);
+  }, [arivalMessage]);
+
   const postMessage = (message) => {
+    socket.current.emit("send-message", {
+      to: selectedChat._id,
+      from: userData._id,
+      message,
+    });
+
     axios
       .post("/chat/add-message", {
         to: selectedChat._id,
@@ -38,6 +59,10 @@ function ContainerChat({ selectedChat }) {
       .catch((err) => {
         console.log(err);
       });
+
+    const msg = [...messages];
+    msg.push({ mySelf: true, text: message });
+    setMessages(msg);
   };
 
   return (

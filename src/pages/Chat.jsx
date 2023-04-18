@@ -1,4 +1,5 @@
 import React from "react";
+import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +10,9 @@ import Welcome from "../components/Welcome/Welcome";
 import { isAuthCheck } from "../redux/auth/authSlice";
 
 function Chat() {
+  const socket = React.useRef();
   const isAuth = useSelector(isAuthCheck);
+  const userData = useSelector((state) => state.auth.data);
   const [contacts, setContacts] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState();
   React.useEffect(() => {
@@ -23,6 +26,13 @@ function Chat() {
       });
   }, []);
 
+  React.useEffect(() => {
+    if (isAuth) {
+      socket.current = io("http://localhost:8000");
+      socket.current.emit("add-user", userData._id);
+    }
+  }, [isAuth]);
+
   if (!window.localStorage.getItem("token")) {
     return <Navigate to="/login" />;
   }
@@ -34,7 +44,7 @@ function Chat() {
         {!selectedChat ? (
           <Welcome />
         ) : (
-          <ContainerChat selectedChat={selectedChat} />
+          <ContainerChat selectedChat={selectedChat} socket={socket} />
         )}
       </div>
     </ChatContainer>

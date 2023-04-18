@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import logoSvg from "../../assets/logo.svg";
 import noAvatar from "../../assets/noavatar.jpg";
+import CurrentUser from "../CurrentUser/CurrentUser";
 
 function Contacts({ contacts, changeChat }) {
-  const currentUser = useSelector((state) => state.auth.data);
   const [currentSelected, setCurrentSelected] = React.useState();
 
   const changeChatHandler = (item) => {
@@ -37,14 +37,7 @@ function Contacts({ contacts, changeChat }) {
           </div>
         ))}
       </div>
-      <div className="current-user">
-        <div className="avatar">
-          <img src={noAvatar} alt="avatar" />
-        </div>
-        <div className="username">
-          <h2>{currentUser?.username}</h2>
-        </div>
-      </div>
+      <CurrentUser />
     </Container>
   );
 }
@@ -105,32 +98,6 @@ const Container = styled.div`
     }
     .selected {
       background-color: #9a86f3;
-    }
-  }
-  .current-user {
-    background-color: #0d0d30;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    .avatar {
-      img {
-        height: 4rem;
-        max-inline-size: 100%;
-      }
-    }
-    .username {
-      h2 {
-        color: white;
-      }
-    }
-    @media screen and (min-width: 720px) and (max-width: 1080px) {
-      gap: 0.5rem;
-      .username {
-        h2 {
-          font-size: 1rem;
-        }
-      }
     }
   }
 `;
