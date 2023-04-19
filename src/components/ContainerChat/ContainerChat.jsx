@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "../../axios";
+import uniqid from 'uniqid';
 
 import noavatar from "../../assets/noavatar.jpg";
 import ContainerInput from "../ContainerInput.jsx/ContainerInput";
@@ -12,7 +13,6 @@ function ContainerChat({ selectedChat, socket }) {
   const [messages, setMessages] = React.useState([]);
   const userData = useSelector((state) => state.auth.data);
   const [arivalMessage, setArivalMessage] = React.useState(null);
-
   React.useEffect(() => {
     chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
   });
@@ -53,12 +53,6 @@ function ContainerChat({ selectedChat, socket }) {
         to: selectedChat._id,
         message,
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
     const msg = [...messages];
     msg.push({ mySelf: true, text: message });
@@ -70,7 +64,7 @@ function ContainerChat({ selectedChat, socket }) {
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
-            <img src={noavatar} alt="" />
+            <img src={selectedChat.avatarUrl.length > 0 ? `http://localhost:8000${selectedChat.avatarUrl}` : noavatar} alt="" />
           </div>
           <div className="username">
             <h3>{selectedChat.username}</h3>
@@ -80,7 +74,7 @@ function ContainerChat({ selectedChat, socket }) {
       </div>
       <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((item) => (
-          <div>
+          <div key={uniqid()}>
             <div className={`message ${item.mySelf ? "sended" : "recieved"}`}>
               <div className="content">
                 <p>{item.text}</p>
@@ -114,6 +108,9 @@ const Container = styled.div`
       .avatar {
         img {
           height: 3rem;
+          width:3rem;
+          object-fit:cover;
+          border-radius:50%;
         }
       }
       .username {

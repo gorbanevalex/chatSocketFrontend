@@ -21,9 +21,6 @@ function Chat() {
       .then(({ data }) => {
         setContacts(data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
 
   React.useEffect(() => {

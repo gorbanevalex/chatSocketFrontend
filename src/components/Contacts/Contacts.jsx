@@ -29,7 +29,7 @@ function Contacts({ contacts, changeChat }) {
             onClick={() => changeChatHandler(item)}
           >
             <div className="avatar">
-              <img src={noAvatar} alt="avatar" />
+              <img src={item.avatarUrl.length > 0 ? `http://localhost:8000${item.avatarUrl}` : noAvatar} alt="avatar" />
             </div>
             <div className="username">
               <h3>{item.username}</h3>
@@ -88,6 +88,9 @@ const Container = styled.div`
       .avatar {
         img {
           height: 3rem;
+          width:3rem;
+          object-fit:cover;
+          border-radius:50%;
         }
       }
       .username {
