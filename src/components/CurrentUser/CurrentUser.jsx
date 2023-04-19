@@ -42,7 +42,7 @@ function CurrentUser() {
     <>
       <Container>
         <div className="avatar" onClick={()=>setModalIsOpen(true)}>
-          <img src={uploadImage.length > 0 ? `http://localhost:8000${uploadImage}` : noAvatar} alt="avatar" />
+          <img src={uploadImage.length > 0 ? `http://62.113.104.159:8000${uploadImage}` : noAvatar} alt="avatar" />
         </div>
         <div className="username">
           <h2>{currentUser?.username}</h2>
@@ -55,7 +55,7 @@ function CurrentUser() {
         <div className="modal-body">
           <div className="change-avatar">
             <input type="file" hidden ref={imageInputRef} onChange={uploadFile}/>
-            <img src={uploadImage.length > 0 ? `http://localhost:8000${uploadImage}` : noAvatar} alt="" onClick={()=>imageInputRef.current.click()}/>
+            <img src={uploadImage.length > 0 ? `http://62.113.104.159:8000${uploadImage}` : noAvatar} alt="" onClick={()=>imageInputRef.current.click()}/>
           </div>
           <button onClick={sendNewAvatar}>Сохранить</button>
           <button className="change-avatar__close" onClick={closeModal}>Отмена</button>

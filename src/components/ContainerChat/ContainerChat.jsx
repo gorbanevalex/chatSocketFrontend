@@ -64,7 +64,7 @@ function ContainerChat({ selectedChat, socket }) {
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
-            <img src={selectedChat.avatarUrl.length > 0 ? `http://localhost:8000${selectedChat.avatarUrl}` : noavatar} alt="" />
+            <img src={selectedChat.avatarUrl.length > 0 ? `http://62.113.104.159:8000${selectedChat.avatarUrl}` : noavatar} alt="" />
           </div>
           <div className="username">
             <h3>{selectedChat.username}</h3>

@@ -25,7 +25,7 @@ function Chat() {
 
   React.useEffect(() => {
     if (isAuth) {
-      socket.current = io("http://localhost:8000");
+      socket.current = io("http://62.113.104.159:8000");
       socket.current.emit("add-user", userData._id);
     }
   }, [isAuth]);
